@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio - Saivenkatakrishna Pallampati</title>
+  <style>
+    /* RESET & GENERAL STYLES */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+    }
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    /* NAVIGATION */
+    nav {
+      width: 100%;
+      padding: 10px 20px;
+      background: #111;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    nav .nav-left h2 {
+      font-size: 1.2rem;
+    }
+    nav .nav-right ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    nav .nav-right li a {
+      transition: color 0.3s;
+    }
+    nav .nav-right li a:hover {
+      color: #888;
+    }
+    
+    /* HERO SECTION */
+    header#hero {
+      height: 100vh;
+      padding-top: 60px; /* ensure content below nav */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+    .hero-container {
+      max-width: 1200px;
+      width: 90%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hero-left {
+      flex: 1 1 500px;
+    }
+    .hero-left h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .hero-left p {
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+    .hero-right {
+      flex: 1 1 400px;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-right img {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+    }
+    
+    /* SECTION GENERAL STYLES */
+    section {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 40px auto;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 8px;
+    }
+    
+    /* ABOUT SECTION - use a centered card */
+    #about .about-card {
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: justify;
+      font-size: 0.95rem;
+      color: #ccc;
+      line-height: 1.5;
+    }
+    
+    /* EXPERIENCE SECTION */
+    #experience .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    /* Use flex-grow and minimum width for a balanced card layout */
+    .card {
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      flex: 1 1 300px;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+    }
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .card span {
+      display: block;
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin-bottom: 10px;
+      text-align: justify;
+    }
+    
+    /* EDUCATION SECTION */
+    #education .education-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .edu-card {
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      flex: 1 1 300px;
+      transition: transform 0.3s;
+    }
+    .edu-card:hover {
+      transform: translateY(-3px);
+    }
+    .edu-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+    .edu-card span {
+      display: block;
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .edu-card p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      text-align: justify;
+    }
+    
+    /* SKILLS SECTION (remains as before) */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    .skill {
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    
+    /* REVEAL ANIMATION */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: none;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero-container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-right {
+        margin-top: 20px;
+      }
+      nav .nav-right ul {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-left">
+      <h2>Saivenkatakrishna Pallampati</h2>
+    </div>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- HERO SECTION -->
+  <header id="hero">
+    <div class="hero-container">
+      <div class="hero-left reveal">
+        <h1>Saivenkatakrishna Pallampati</h1>
+        <p>Manchester, NH | 603-229-8874</p>
+        <p><a href="mailto:saivenkat134.p@gmail.com">saivenkat134.p@gmail.com</a></p>
+        <p><a href="https://www.linkedin.com/in/saivenkatakrishna-pallampati/" target="_blank">LinkedIn Profile</a></p>
+        <p>
+          I am passionate about software testing and quality assurance—applying rigorous automated testing methods to ensure
+          high-performance software solutions. With a strong technical background and a commitment to excellence, I continuously
+          strive to deliver reliable products.
+        </p>
+      </div>
+      <div class="hero-right reveal">
+        <!-- Replace with your actual profile image URL -->
+        <img src="profile.jpg" alt="Profile Photo">
+      </div>
+    </div>
+  </header>
+  
+  <!-- ABOUT SECTION -->
+  <section id="about">
+    <h2 class="section-title reveal">About Me</h2>
+    <div class="about-card reveal">
+      <p>
+        I am a results-driven IT professional specializing in software testing and development. Throughout my career, I have
+        excelled in roles that demand meticulous attention to detail, strategic problem solving, and effective communication.
+        My practical experience as an Artificial Intelligence Engineer Intern at RadicalAI combined with my rigorous work
+        as a Quality Analyst at Infosys has equipped me with a comprehensive understanding of modern testing methodologies
+        and development frameworks. I continuously leverage my proficiency in tools such as Python, TensorFlow, Django, and
+        manual testing techniques to ensure the highest quality standards across software projects.
+      </p>
+    </div>
+  </section>
+  
+  <!-- EXPERIENCE SECTION -->
+  <section id="experience">
+    <h2 class="section-title reveal">Experience</h2>
+    <div class="cards">
+      <!-- RadicalAI Experience Card -->
+      <div class="card reveal">
+        <h3>Artificial Intelligence Engineer Intern</h3>
+        <span>RadicalAI | May 2024 - August 2024</span>
+        <p>
+          At RadicalAI, I played a key role in developing ReX, an AI career coach. I leveraged cutting-edge technologies such as
+          OpenAI and Google Gemini to design and implement advanced AI coaching models. This role required the effective use
+          of Python, TensorFlow, and various machine learning libraries to deliver a robust, scalable solution.
+        </p>
+      </div>
+      <!-- Infosys Experience Card -->
+      <div class="card reveal">
+        <h3>Quality Analyst</h3>
+        <span>Infosys, Hyderabad, India | October 2021 - August 2023</span>
+        <p>
+          As a Quality Analyst at Infosys, I led the bug detection and reporting process while designing comprehensive test cases
+          across multiple environments. My work helped reduce software bugs by 25% and enhanced system stability by 20%. I
+          extensively used manual testing, Jira, and programming languages including Java, C, and Python to optimize quality
+          assurance practices.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- EDUCATION SECTION -->
+  <section id="education">
+    <h2 class="section-title reveal">Education</h2>
+    <div class="education-container">
+      <!-- Master's Card -->
+      <div class="edu-card reveal">
+        <h3>Master of Science in Information Technology</h3>
+        <span>University of New Hampshire, Manchester, NH | May 2025</span>
+        <p>
+          Achieved a GPA of 3.90 while completing advanced coursework in Practical AI, Full Stack Development, Database Management,
+          Integrated Computing, and Information Security. This program provided a robust foundation in both theoretical and practical
+          aspects of modern IT.
+        </p>
+      </div>
+      <!-- Bachelor's Card -->
+      <div class="edu-card reveal">
+        <h3>Bachelor in Computer Applications</h3>
+        <span>Kakaraparthi Bhavanarayana College, Andhra Pradesh, India | June 2018 - July 2021</span>
+        <p>
+          Earned a GPA of 3.50 with a curriculum focused on Python, Java, SQL, C, and C#. This degree laid the groundwork for my
+          passion for software development and quality assurance, enabling me to build a broad technical skill set.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SKILLS SECTION -->
+  <section id="skills">
+    <h2 class="section-title reveal">Technical Skills</h2>
+    <div class="skills-grid reveal">
+      <div class="skill">Python</div>
+      <div class="skill">SQL</div>
+      <div class="skill">Django</div>
+      <div class="skill">Web Development</div>
+      <div class="skill">GitHub</div>
+      <div class="skill">Git BASH</div>
+      <div class="skill">AWS SageMaker</div>
+      <div class="skill">Linux</div>
+      <div class="skill">PyTorch</div>
+      <div class="skill">TensorFlow</div>
+      <div class="skill">Computer Vision</div>
+      <div class="skill">Deep Learning</div>
+      <div class="skill">Machine Learning</div>
+      <div class="skill">NLP</div>
+      <div class="skill">Unix</div>
+      <div class="skill">Jira</div>
+      <div class="skill">Manual Testing</div>
+      <div class="skill">C</div>
+      <div class="skill">Streamlit</div>
+      <div class="skill">LangChain</div>
+      <div class="skill">Google Gemini API</div>
+      <div class="skill">RESTful APIs</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">Scikit-learn</div>
+      <div class="skill">NumPy</div>
+      <div class="skill">Pandas</div>
+      <div class="skill">Matplotlib</div>
+      <div class="skill">PostgreSQL</div>
+      <div class="skill">MySQL</div>
+      <div class="skill">MongoDB</div>
+      <div class="skill">Database Design</div>
+      <div class="skill">ER Modeling</div>
+      <div class="skill">Information Security</div>
+      <div class="skill">Cryptography</div>
+      <div class="skill">Network Security</div>
+      <div class="skill">System Design</div>
+      <div class="skill">Object-Oriented Design</div>
+      <div class="skill">SDLC</div>
+      <div class="skill">Cloud Security</div>
+    </div>
+  </section>
+  
+  <!-- PROJECTS SECTION -->
+  <section id="projects">
+    <h2 class="section-title reveal">Projects</h2>
+    <div class="cards">
+      <!-- CricGenie Project Card -->
+      <div class="card reveal">
+        <h3>CricGenie – Your Ultimate Cricket Companion</h3>
+        <span>Team Leader | May 2024</span>
+        <p>
+          I led the development of CricGenie—a dynamic web application that provides real-time cricket player information.
+          The project featured robust user authentication built in Django and seamless integration of the Cricbuzz API via RapidAPI.
+          The front-end was developed using HTML, CSS, and JavaScript (incorporating AJAX for efficient data loading), ensuring a polished experience.
+        </p>
+        <p><strong>Tech Stack:</strong> Django, Python, HTML, CSS, JavaScript, AJAX, RapidAPI.</p>
+        <p><a href="https://github.com/your-github-repo" target="_blank">View on GitHub</a></p>
+      </div>
+      <!-- Fine Tuning Object Detection Project Card -->
+      <div class="card reveal">
+        <h3>Fine Tuning Object Detection</h3>
+        <span>Team Leader | December 2023</span>
+        <p>
+          I managed the development of an enhanced car detection model by carefully selecting datasets and applying advanced techniques.
+          The integration of pre-trained models, coupled with rigorous testing, improved model accuracy by 20% and reduced false positives by 30%,
+          resulting in a 25% boost in overall performance.
+        </p>
+        <p><strong>Tech Stack:</strong> Python, TensorFlow, Keras, OpenCV, Pre-trained Models.</p>
+        <p><a href="https://github.com/your-github-repo" target="_blank">View on GitHub</a></p>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    // Reveal animation on scroll
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveals[i].getBoundingClientRect().top;
+        if (elementTop < windowHeight - 100) {
+          reveals[i].classList.add('active');
+        } else {
+          reveals[i].classList.remove('active');
+        }
+      }
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
+</body>
+</html>
